@@ -5,7 +5,6 @@ class Solution {
 public:
     bool canConstruct(string ransomNote, string magazine) {
         std::unordered_map<char, int> HashTable;
-        int number = 0;
         for (char i : magazine) {
             HashTable[i]++;
         }
@@ -15,10 +14,8 @@ public:
                 return false;
             }
             it->second--;
-            number++;
         }
-        if (number == ransomNote.length())
-            return true;
-        return false;
+        
+        return true;
     };
 };
