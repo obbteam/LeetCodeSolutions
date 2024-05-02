@@ -3,12 +3,12 @@ public:
     int lengthOfLastWord(string s) {
         int size = s.length() - 1;
         int count = 0;
-        while (isspace(s[size])) {
-            size--;
-        }
-        while (size >= 0 && isalpha(s[size])) {
-            count++;
-            size--;
+        for (; size >= 0; size--) {
+            if (s[size] != ' ') {
+                count++;
+            }
+            if (count && s[size] == ' ')
+                break;
         }
         return count;
     }
