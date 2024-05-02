@@ -1,26 +1,15 @@
 class Solution {
 public:
     int findMaxK(vector<int>& nums) {
-        map<int, int> omap;
+        unordered_set<int> umap;
+        int result = -1;
         for (int num : nums) {
-            omap[num] = num;
-        }
-
-        auto left = omap.begin();
-        auto right = omap.end();
-        right--;
-        while (left->second < right->second) {
-            if (abs(left->second) == right->second) {
-                return right->second;
-            } else {
-                if (abs(left->second) < right->second) {
-                    right--;
-                } else if (abs(left->second) > right->second) {
-                    left++;
-                }
+            int abs_num = abs(num);
+            if(abs_num > result && umap.contains(-num)){
+                result = abs_num;
             }
+            umap.insert(num);
         }
-
-        return -1;
+        return result;
     }
 };
