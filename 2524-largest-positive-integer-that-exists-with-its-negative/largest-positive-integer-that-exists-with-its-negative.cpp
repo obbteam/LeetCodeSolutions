@@ -10,12 +10,12 @@ public:
         auto right = omap.end();
         right--;
         while (left->second < 0) {
-            if (left->second == -1 * right->second) {
+            if (abs(left->second) == right->second) {
                 return right->second;
             } else {
-                if (left->second * -1 < right->second) {
+                if (abs(left->second) < right->second) {
                     right--;
-                } else if (left->second * -1 > right->second) {
+                } else if (abs(left->second) > right->second) {
                     left++;
                 }
             }
