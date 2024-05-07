@@ -13,25 +13,24 @@ class Solution {
 public:
     ListNode* doubleIt(ListNode* head) {
         stack<int> mystack;
-        ListNode* copy = head;
-        ListNode* result = nullptr;
-        while (copy != nullptr) {
-            mystack.push(copy->val * 2);
-            copy = copy->next;
+        while (head != nullptr) {
+            mystack.push(head->val * 2);
+            head = head->next;
         }
         ListNode* newTail = nullptr;
         int carry = 0;
 
         while (!mystack.empty()) {
             newTail = new ListNode(0, newTail);
-            int last = mystack.top();
-            int remainder = last%10;
-            newTail->val = remainder + carry;
-            if (last >= 10) carry = 1;
-            else carry = 0;
+            newTail->val = mystack.top() % 10 + carry;
+            if (mystack.top() >= 10)
+                carry = 1;
+            else
+                carry = 0;
             mystack.pop();
         }
-        if(carry == 1) newTail = new ListNode(1, newTail);
+        if (carry == 1)
+            newTail = new ListNode(1, newTail);
         return newTail;
     }
 };
