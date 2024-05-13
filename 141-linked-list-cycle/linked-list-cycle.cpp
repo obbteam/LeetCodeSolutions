@@ -9,18 +9,13 @@
 class Solution {
 public:
     bool hasCycle(ListNode* head) {
-        ListNode* tortoise = head;
-        ListNode* hare = head;
-
-        while (hare != nullptr && hare->next != nullptr) {
-            tortoise = tortoise->next; // moves by 1 node
-            hare = hare->next->next;   // moves by 2 nodes
-
-            if (tortoise == hare) {
-                return true; // Cycle detected
-            }
+        unordered_set<ListNode*> seenNodes;
+        while (head != nullptr) {
+            if (seenNodes.find(head) != seenNodes.end())
+                return true;
+            seenNodes.insert(head);
+            head = head->next;
         }
-
-        return false; // No cycle found
+        return false;
     }
 };
