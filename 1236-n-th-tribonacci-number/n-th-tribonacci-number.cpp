@@ -1,10 +1,20 @@
 class Solution {
 public:
     int tribonacci(int n) {
-        int MyArray[38] = {0, 1, 1};
-        for (int k = 3; k <= n; k++) {
-            MyArray[k] = MyArray[k - 1] + MyArray[k - 2] + MyArray[k - 3];
+        if (n <= 1) return n;
+        if (n == 2) return 1;
+
+        int prev3 = 0;
+        int prev2 = 1;
+        int prev1 = 1;
+        int res = 0;
+
+        for (int i = 3; i <= n; i++) {
+            res = prev3 + prev2 + prev1;
+            prev3 = prev2;
+            prev2 = prev1;
+            prev1 = res;
         }
-        return MyArray[n];
+        return res;
     }
 };
