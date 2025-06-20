@@ -1,22 +1,17 @@
 class Solution {
 public:
     bool uniqueOccurrences(vector<int>& arr) {
-        std::unordered_map<int, int> map;
+        std::unordered_map<int, int> freq;
 
-        for (int i = 0; i < arr.size(); ++i) {
-            int numOcc = 0;
-            for (int j = 0; j < arr.size(); ++j) {
-                if (arr[i] == arr[j])
-                    numOcc++;
-            }
-
-            if (map.contains(numOcc)) {
-                if (map[numOcc] != arr[i])
-                    return false;
-            } else {
-                map.insert({numOcc, arr[i]});
-            }
+        for (auto& x : arr) {
+            freq[x]++;
         }
-        return true;
+
+        unordered_set<int> s;
+        for (auto& x : freq) {
+            s.insert(x.second);
+        }
+
+        return s.size() == freq.size();
     }
 };
