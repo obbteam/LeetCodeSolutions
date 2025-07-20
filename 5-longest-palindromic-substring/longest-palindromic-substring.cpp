@@ -1,48 +1,31 @@
 class Solution {
 public:
-
-    bool isPalindrome(string s) {
-        auto start = 0;
-        auto end = s.length() - 1;
-
-        while(start <= end) {
-            if(s[start] == s[end]){
-                ++start;
-                end--;
-            } else return false;
-        }
-        return true;
+    string expand(int l, int r, std::string &s) {
+    while (l >= 0 && r < s.length() && s[l] == s[r]) {
+        l--;
+        r++;
     }
 
+    return s.substr(l + 1, r - l - 1);
+}
 
-    string longestPalindrome(string s) {
-        if(s.length() == 1) return s;
-        if(s.length() == 2 && s[0]==s[1]) {
-            return s;
-        } else if (s.length() == 2 && s[0]!=s[1]) {
-            return s.substr(1);
-        }
+string longestPalindrome(string s) {
+    string maxP = "";
 
-
-        string result = "";
-        
-        for(int i = 0; i < s.length(); ++i) {
-            auto position = s.find_last_of(s[i]);
-            while( position != i ) {
-                auto sliced = s.substr(i,position - i + 1);
-                if(sliced.length() < result.length()) break;
-
-                if(isPalindrome(sliced)) {
-                    result = sliced;
-                    break;
-                }
-
-                position = s.find_last_of(s[i], position - 1);
-            }
-        }
-
-        if(result.length() == 0) result.push_back(s[0]);
-
-        return result;
+    if (s.length() < 2) {
+        return s;
     }
+
+    for (int i = 0; i < s.length(); i++) {
+        string first = expand(i, i, s);
+        if (i + 1 < s.length() && s[i] == s[i + 1]) {
+            string second = expand(i, i + 1, s);
+            first = second.length() > first.length() ? second : first;
+        }
+
+        maxP = first.length() > maxP.length() ? first : maxP;
+    }
+
+    return maxP;
+}
 };
