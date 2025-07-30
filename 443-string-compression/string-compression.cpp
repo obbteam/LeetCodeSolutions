@@ -36,9 +36,6 @@ int compress(std::vector<char> &chars) {
 
     pos = pushChar(pos, prev, streak, chars);
 
-    for (auto &c: chars) {
-        std::cout << c << std::endl;
-    }
     return pos;
 }
 };
