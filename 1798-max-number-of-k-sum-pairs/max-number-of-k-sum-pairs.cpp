@@ -1,18 +1,22 @@
 class Solution {
 public:
     int maxOperations(std::vector<int>& nums, int k) {
-        std::unordered_map<int, int> freqs;
+        std::ranges::sort(nums);
         int count = 0;
-        freqs.reserve(nums.size());
+        auto start = nums.begin();
+        auto end = nums.end() - 1;
 
-        for (auto& x : nums) {
-            if (freqs[k - x] > 0) {
+        while (start < end) {
+            if (*start + *end == k) {
                 count++;
-                freqs[k - x]--;
-            } else {
-                freqs[x]++;
-            }
+                ++start;
+                --end;
+            } else if (*start + *end > k)
+                --end;
+            else
+                ++start;
         }
+
         return count;
     }
 };
