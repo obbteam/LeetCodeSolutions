@@ -13,18 +13,16 @@
 class Solution {
 public:
     int countGoodNodes(TreeNode* root, int prevMax) {
-        if (root == nullptr) {
-            return 0;
+        if (root) {
+            prevMax = std::max(prevMax, root->val);
+            int ans = countGoodNodes(root->left, prevMax) +
+                      countGoodNodes(root->right, prevMax);
+
+            ans += root->val >= prevMax ? 1 : 0;
+
+            return ans;
         }
-
-        int ans = root->val < prevMax ? 0 : 1;
-
-        prevMax = std::max(prevMax, root->val);
-
-        int left = countGoodNodes(root->left, prevMax);
-        int right = countGoodNodes(root->right, prevMax);
-
-        return left + right + ans;
+        return 0;
     }
 
     int goodNodes(TreeNode* root) { return countGoodNodes(root, INT_MIN); }
