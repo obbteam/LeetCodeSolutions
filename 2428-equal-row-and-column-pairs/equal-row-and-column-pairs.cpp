@@ -1,29 +1,24 @@
 class Solution {
 public:
-    int equalPairs(std::vector<std::vector<int>>& grid) {
-        int n = grid.size(), count = 0;
+    int equalPairs(std::vector<std::vector<int> > &grid) {
+    std::map<std::vector<int>, int> mp;
 
-        if (n == 0 || n != grid[0].size()) {
-            return 0;
-        }
-
-        for (int i = 0; i < n; i++) {
-            auto& row = grid[i];
-
-            for (int j = 0; j < n; j++) {
-                bool equals = true;
-
-                for (int k = 0; k < n; k++) {
-                    if (row[k] != grid[k][j]) {
-                        equals = false;
-                        break;
-                    }
-                }
-
-                if (equals)
-                    count++;
-            }
-        }
-        return count;
+    for (auto &row: grid) {
+        mp[row]++;
     }
+
+    int ans = 0;
+
+    for (int i = 0; i < grid.size(); i++) {
+        std::vector<int> temp;
+        for (int j = 0; j < grid[0].size(); j++) {
+            temp.push_back(grid[j][i]);
+        }
+        if (mp.contains(temp)) {
+            ans += mp[temp];
+        }
+    }
+
+    return ans;
+}
 };
