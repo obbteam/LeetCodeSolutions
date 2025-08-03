@@ -17,24 +17,28 @@ public:
             return {};
 
         std::vector<int> result;
-
         std::queue<TreeNode*> nodeQueue;
         nodeQueue.push(root);
 
         while (!nodeQueue.empty()) {
-            result.push_back(nodeQueue.back()->val);
+            TreeNode* rightSide = nullptr;
 
-            auto temp = nodeQueue;
-            nodeQueue = std::queue<TreeNode*>();
+            auto size = nodeQueue.size();
 
-            while (!temp.empty()) {
-                if (temp.front()->left != nullptr) {
-                    nodeQueue.push(temp.front()->left);
+            for (int i = 0; i < size; i++) {
+                TreeNode* node = nodeQueue.front();
+                nodeQueue.pop();
+                if (node) {
+                    rightSide = node;
+                    if (node->left)
+                        nodeQueue.push(node->left);
+                    if (node->right)
+                        nodeQueue.push(node->right);
                 }
-                if (temp.front()->right != nullptr) {
-                    nodeQueue.push(temp.front()->right);
-                }
-                temp.pop();
+            }
+
+            if (rightSide) {
+                result.push_back(rightSide->val);
             }
         }
 
