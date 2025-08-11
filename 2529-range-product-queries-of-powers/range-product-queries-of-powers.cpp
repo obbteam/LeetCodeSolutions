@@ -14,16 +14,24 @@ public:
             n = n >> 1;
             i++;
         }
-        int modulo = std::pow(10,9) + 7;
         for (auto q : queries) {
             int p = exponents[q[1]] - (q[0] ? exponents[q[0] - 1] : 0);
             int res = 1;
-            for (int i = 0; i < p; i++) {
-                res = (res * 2) % modulo;
-            }
-            result.push_back(res);
+            result.push_back(modPow(2,p));
         }
 
         return result;
     }
+
+    long long modPow(long long base, long long exp) {
+        int MOD = 1000000007;
+        long long ans = 1;
+        while (exp > 0) {
+            if (exp & 1) ans = (ans * base) % MOD;
+            base = (base * base) % MOD;
+            exp >>= 1;
+        }
+        return ans;
+    }
+
 };
