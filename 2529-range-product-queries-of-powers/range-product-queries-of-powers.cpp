@@ -1,34 +1,29 @@
 class Solution {
 public:
-   std::vector<int> productQueries(int n,
-                                std::vector<std::vector<int> > queries) {
-    int power = 1, MOD = (int) (1e9 + 7);
-    while (power <= n) power <<= 1;
-    power >>= 1;
-
-    std::vector<int> powers;
-    while (n > 0) {
-        if (power <= n) {
-            powers.push_back(power);
-            n -= power;
+   vector<int> productQueries(int n, vector<vector<int>>& queries) {
+        vector<long long> v;
+        long long val=1, mod=1e9+7;
+        for(int i=0;i<32;i++){
+            if(n & (1<<i)) v.push_back(val);
+            val*=2;
+            val%=mod;
         }
-        power >>= 1;
+        // for(int i=1;i<v.size();i++){
+        //     v[i]*=v[i-1];
+        // }
+        vector<int> ans;
+        for(auto &it: queries){
+            long long curr=1;
+            for(int i=it[0];i<=it[1];i++){
+                curr*=v[i];
+                curr%=mod;
+            }
+            ans.push_back(curr);
+
+        }
+        return ans;
     }
 
-    n = powers.size();
-    std::vector<std::vector<int> > prefix(n, std::vector<int>(n, 0));
-    for (int i = 0; i < n; i++) {
-        prefix[i][i] = powers[n - 1 - i];
-        for (int j = i + 1; j < n; j++)
-            prefix[i][j] = static_cast<int>((1L * prefix[i][j - 1] * powers[n - 1 - j]) % MOD);
-    }
-
-    std::vector<int> result(queries.size());
-    for (int i = 0; i < queries.size(); i++) {
-        result[i] = prefix[queries[i][0]][queries[i][1]];
-    }
-    return result;
-}
 
 
 };
