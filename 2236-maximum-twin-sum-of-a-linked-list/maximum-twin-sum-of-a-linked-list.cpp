@@ -10,25 +10,40 @@
  */
 class Solution {
 public:
-    int pairSum(ListNode *head) {
-    int n = 0;
-    auto *node = head;
-    for (; node != nullptr; node = node->next)
-        n++;
+    ListNode* reverse(ListNode* head) {
+    if (head == nullptr || head->next == nullptr)
+        return head;
 
-    n /= 2;
-    node = head;
-    int arr[n];
-    for (int i = 0; i < n; i++) {
-        arr[i] = node->val;
-        node = node->next;
+    ListNode* p = nullptr;
+    ListNode* cur = head;
+    while(cur){
+        ListNode* f = cur->next;
+        cur->next = p;
+        p = cur;
+        cur = f;
+    }
+    return p;
+}
+
+int pairSum(ListNode *head) {
+    ListNode *slow = head;
+    ListNode *fast = head->next;
+
+    while (fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
     }
 
-    int maxSum = 0;
+    auto revList = reverse(slow->next);
+    slow->next = nullptr;
 
-    for (int i = n - 1; i >= 0; --i) {
-        maxSum = std::max(maxSum, arr[i] + node->val);
-        node = node->next;
+    slow = head;
+    int maxSum = 0;
+    while (slow) {
+        int sum = slow->val + revList->val;
+        maxSum = std::max(maxSum, sum);
+        slow = slow->next;
+        revList = revList->next;
     }
 
     return maxSum;
