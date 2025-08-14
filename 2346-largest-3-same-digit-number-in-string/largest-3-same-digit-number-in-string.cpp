@@ -8,11 +8,9 @@ public:
 
         for (int i = 2; i < num.length(); i++) {
             if (num[i] == num[i - 1] && num[i - 1] == num[i - 2]) {
-                auto toCheck = num.substr(i - 2, 3);
-
                 if (largestGoodInteger.empty() ||
-                    std::stoi(toCheck) > std::stoi(largestGoodInteger))
-                    largestGoodInteger = toCheck;
+                    std::stoi(num.substr(i - 2, 3)) > std::stoi(largestGoodInteger))
+                    largestGoodInteger = num.substr(i - 2, 3);
             }
         }
 
