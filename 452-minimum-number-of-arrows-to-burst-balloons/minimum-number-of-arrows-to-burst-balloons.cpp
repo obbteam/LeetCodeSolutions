@@ -2,7 +2,7 @@ class Solution {
 public:
     int findMinArrowShots(vector<vector<int>>& points) {
         std::sort(points.begin(), points.end(),
-                  [](vector<int> a, vector<int> b) { return a[0] < b[0]; });
+                  [](const vector<int>& a, const vector<int>& b) { return a[0] < b[0]; });
 
         int l = INT_MIN, r = INT_MAX, count = 1;
         for (const auto& interval : points) {
