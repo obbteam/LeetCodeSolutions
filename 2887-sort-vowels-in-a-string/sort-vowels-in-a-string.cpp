@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool isVowel(const char& c) {
+    bool isVowel(char c) {
         return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
                c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
     }
@@ -8,7 +8,7 @@ public:
     std::string sortVowels(std::string s) {
         std::unordered_map<char, int> vowels;
 
-        for (const char& c : s)
+        for (char c : s)
             if (isVowel(c))
                 vowels[c]++;
 
@@ -18,7 +18,7 @@ public:
         int j = 0;
         std::string sortedVowels = "AEIOUaeiou";
         std::string result;
-        for (const char& c : s)
+        for (char c : s)
             if (!isVowel(c))
                 result += c;
             else {
