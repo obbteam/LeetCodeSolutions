@@ -1,17 +1,17 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        unordered_map<int,int> hm;
-        for (int n : nums)
-            hm[n]++;
+        int res = 0;
+        int majority = 0;
         
-        int major = nums[0], count = 1;
-        for (auto [first, second] : hm){
-            if (second > count) {
-                count = second;
-                major = first;
+        for (int n : nums) {
+            if (majority == 0) {
+                res = n;
             }
+            
+            majority += n == res ? 1 : -1;
         }
-        return major;
+        
+        return res;        
     }
 };
