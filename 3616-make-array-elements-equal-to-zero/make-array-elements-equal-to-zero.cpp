@@ -2,50 +2,43 @@ class Solution {
 public:
     vector<int> dirs = {1, -1};
 
-    int helper(int i, vector<int>& nums) {
+    int helper(int i, int nonZeros, vector<int>& nums) {
         int count = 0;
 
         for (auto d : dirs) {
             auto cp = nums;
-            unordered_set<int> zeros;
-            zeros.insert(i);
-
-            // left
+            int nz = nonZeros;
             int cur = i;
-            while (zeros.size() < cp.size()) {
-                cur += d;
-                if (cur < 0 || cur >= cp.size())
-                    break;
+            while (nz > 0 && cur >= 0 && cur < nums.size()) {
+                if (cp[cur] > 0) {
+                    cp[cur]--;
 
-                if (cp[cur] == 0) {
-                    if (!zeros.contains(cur))
-                        zeros.insert(cur);
-                    continue;
+                    if (cp[cur] == 0)
+                        nz--;
+                    d *= -1;
                 }
-                cp[cur]--;
+                cur += d;
+            }
 
-                if (cp[cur] == 0)
-                    zeros.insert(cur);
-                d = d == -1 ? 1 : -1;
-            }
-            if (zeros.size() == cp.size())
+            if (nz == 0)
                 count++;
-            else {
-                int z = 0;
-                for (auto x : cp) if (x == 0) z++;
-                if (z == cp.size()) count++;
-            }
         }
 
         return count;
     }
 
     int countValidSelections(vector<int>& nums) {
-        int count = 0;
+        int count = 0, nonZeros = 0;
+
+        for (auto x : nums) {
+            if (x > 0) {
+                nonZeros++;
+            }
+        }
 
         for (int i = 0; i < nums.size(); ++i) {
             if (nums[i] == 0)
-                count += helper(i, nums);
+                count += helper(i, nonZeros, nums);
         }
         return count;
     }
