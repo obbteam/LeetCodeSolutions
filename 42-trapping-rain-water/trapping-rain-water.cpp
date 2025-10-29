@@ -1,28 +1,30 @@
 class Solution {
 public:
-    int trap(std::vector<int>& height) {
-    int area = 0;
-    int* l = &height.front();
-    int* r = &height.back();
-    int leftMax = *l;
-    int rightMax = *r;
+    int trap(vector<int>& height) {
+        int n = height.size();
+        if (n == 0)
+            return 0;
 
-    while (l < r) {
-        if (*l <= rightMax) {
-            l++;
-            if (leftMax - *l > 0)
-                area += leftMax - *l;
-            leftMax = std::max(*l, leftMax);
+        vector<int> prefixMax(n, 0), sufixMax(n, 0);
+
+        int prevMax = height[0];
+        for (int i = 1; i < n; ++i) {
+            prefixMax[i] = prevMax;
+            prevMax = max(prevMax, height[i]);
         }
 
-        if (*r < leftMax) {
-            r--;
-            if (rightMax - *r > 0)
-                area += rightMax - *r;
-            rightMax = std::max(*r, rightMax);
+        prevMax = height[n - 1];
+        for (int i = n - 2; i >= 0; --i) {
+            sufixMax[i] = prevMax;
+            prevMax = max(prevMax, height[i]);
         }
+
+        int sum = 0;
+        for (int i = 0; i < n; ++i) {
+            int water_level = min(prefixMax[i], sufixMax[i]);
+            sum += max(0, water_level - height[i]);
+        }
+
+        return sum;
     }
-
-    return area;
-}
 };
