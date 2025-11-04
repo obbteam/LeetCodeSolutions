@@ -1,19 +1,15 @@
 class Solution {
 public:
     bool canJump(vector<int>& nums) {
-        bool can = false;
+        int n = nums.size(), idx = n - 1;
+        if (n < 2) return true;
 
-        int* r = &nums.back();
-        int* l = r--;
-
-        for (int i = nums.size() - 1; i >= 0; i--) {
-            if (nums[i] >= r - l) {
-                can = true;
-                r = l;
-            } else
-                can = false;
-            l--;
+        vector<bool> dp(n);
+        int newTarget = INT_MAX;
+        for (int i = n - 2; i >= 0; --i) {
+            dp[i] = (idx - i <= nums[i]) || (newTarget - i <= nums[i]);
+            if (dp[i]) newTarget = i;
         }
-        return can;
-    };
+        return dp[0];
+    }
 };
