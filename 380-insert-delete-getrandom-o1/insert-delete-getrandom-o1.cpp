@@ -1,32 +1,35 @@
 class RandomizedSet {
 public:
     RandomizedSet() {
-        set.reserve(2 * 100000);
     }
     
     bool insert(int val) {
-        if (set.contains(val)) return false;
-        set.insert(val);
-        size++;
+        if (valuesIdx.contains(val)) return false;
+
+        valuesIdx[val] = values.size();
+        values.emplace_back(val);
+
         return true;
     }
     
     bool remove(int val) {
-        if (!set.contains(val)) return false;
-        set.erase(val);
-        size--;
+        if (!valuesIdx.contains(val)) return false;
+        
+        int idx = valuesIdx[val];
+        valuesIdx[values.back()] = idx;
+        valuesIdx.erase(val);
+        values[idx] = values.back();
+        values.pop_back();
         return true;
     }
     
     int getRandom() {
-        auto it = set.begin();
-        std::advance(it, rand() % size);
-        return *it;
+        return values[rand() % values.size()];
     }
 
     private:
-    unordered_set<int> set;
-    size_t size = 0;
+    unordered_map<int, int> valuesIdx;
+    vector<int> values;
 };
 
 /**
