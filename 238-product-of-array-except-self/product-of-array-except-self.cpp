@@ -11,10 +11,9 @@ public:
             right[i] = right[i+1] * nums[i+1];
         }
         
-        vector<int> ans(nums.size());
         for (int i = 0; i < nums.size(); ++i) {
-            ans[i] = left[i] * right[i];
+            left[i] *= right[i];
         }
-        return ans;
+        return left;
     }
 };
