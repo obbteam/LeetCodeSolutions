@@ -4,8 +4,16 @@ public:
         unordered_map<string, vector<string>> map;
             
         for (auto s : strs) {
-            auto key = s;
-            sort(key.begin(), key.end());
+            array<int, 26> letters = {0};
+
+            for (auto l : s) {
+                letters[l - 'a']++;
+            }
+
+            string key;
+            for (auto l : letters) {
+                key += to_string(l) + 'a';
+            }
             map[key].push_back(s);
         }
 
