@@ -3,14 +3,16 @@ public:
     bool isAnagram(string s, string t) {
         if (s.length() != t.length()) return false;
 
-        unordered_map<char, int> freq1;
+        vector<int> freq1(26,0);
 
-        for (auto l : s) freq1[l]++;
+        for (auto l : s) freq1[l - 'a']++;
 
-        for (auto l : t) {
-            freq1[l]--;
-            if (freq1[l] == 0) freq1.erase(l);
+        for (auto l : t) freq1[l-'a']--;
+
+        for (auto i : freq1) {
+            if (i > 0) return false;
         }
-        return freq1.empty();
+
+        return true;
     }
 };
