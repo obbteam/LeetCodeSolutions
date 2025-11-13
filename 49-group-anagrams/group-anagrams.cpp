@@ -12,7 +12,7 @@ public:
         vector<vector<string>> ans;
         ans.reserve(map.size());
         for (auto &[key, vec] : map) {
-            ans.emplace_back(move(vec));
+            ans.emplace_back(vec);
         }
         return ans;
     }
