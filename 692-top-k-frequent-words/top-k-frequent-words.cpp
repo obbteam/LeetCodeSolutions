@@ -7,9 +7,16 @@ public:
             freq[w]++;
         }
 
-        priority_queue<pair<int, string>> pq;
-        for (auto &it : freq) {
-            pq.push({-it.second, it.first});
+        auto cmp = [] (const pair<int, string> &a, const pair<int, string> &b) {
+            if (a.first == b.first) {
+                return a.second < b.second;
+            }
+            return a.first > b.first;
+        };
+
+        priority_queue<pair<int, string>, vector<pair<int, string>>, decltype(cmp)> pq;
+        for (auto &[w, f] : freq) {
+            pq.push({f, w});
             if (pq.size() > k) pq.pop();
         }
 
