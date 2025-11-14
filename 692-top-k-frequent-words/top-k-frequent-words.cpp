@@ -1,5 +1,14 @@
 class Solution {
 public:
+    struct cmp {
+        bool operator()(const pair<int, string> &a, const pair<int, string> &b) {
+            if (a.first == b.first) {
+                return a.second < b.second;
+            }
+            return a.first > b.first;
+        }
+    };
+
     vector<string> topKFrequent(vector<string>& words, int k) {
         unordered_map<string, int> freq;
         freq.reserve(words.size());
@@ -7,14 +16,7 @@ public:
             freq[w]++;
         }
 
-        auto cmp = [] (const pair<int, string> &a, const pair<int, string> &b) {
-            if (a.first == b.first) {
-                return a.second < b.second;
-            }
-            return a.first > b.first;
-        };
-
-        priority_queue<pair<int, string>, vector<pair<int, string>>, decltype(cmp)> pq;
+        priority_queue<pair<int, string>, vector<pair<int, string>>, cmp> pq;
         for (auto &[w, f] : freq) {
             pq.push({f, w});
             if (pq.size() > k) pq.pop();
