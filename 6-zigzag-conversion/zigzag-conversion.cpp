@@ -11,7 +11,7 @@ public:
             i += direction;
         }
 
-        string converted = "";
+        string converted;
         converted.reserve(s.length());
         for(auto &s : conv) {
             converted += s;
