@@ -1,8 +1,6 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        s = trim(s);
-
         stack<string> st;
         string w;
         for (char c : s) {
@@ -15,7 +13,8 @@ public:
             }
             w += c;
         }
-        st.push(w);
+        if(!w.empty())
+            st.push(w);
 
         string ans;
 
