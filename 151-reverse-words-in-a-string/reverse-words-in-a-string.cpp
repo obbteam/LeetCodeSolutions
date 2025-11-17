@@ -1,30 +1,43 @@
 class Solution {
 public:
-    std::string reverseWords(std::string s) {
-        std::stack<std::string> stack;
-        s = s.substr(s.find_first_not_of(' '),
-                     s.find_last_not_of(' ') - s.find_first_not_of(' ') + 1);
+    string reverseWords(string s) {
+        s = trim(s);
 
-        std::string word;
-        for (int i = 0; i < s.length(); i++) {
-            if (s[i] != ' ')
-                word += s[i];
-            else {
-                if (!word.empty())
-                    stack.push(word);
-                word = "";
+        stack<string> st;
+        string w;
+        for (char c : s) {
+            if (c == ' ') {
+                if (!w.empty()) {
+                    st.push(w);
+                    w.erase();
+                }
+                continue;
             }
+            w += c;
         }
-        stack.push(word);
+        st.push(w);
 
-        string res;
-        while (!stack.empty()) {
-            res += stack.top();
-            stack.pop();
-            if (!stack.empty())
-                res += " ";
+        string ans;
+
+        while (!st.empty()) {
+            ans += st.top();
+            st.pop();
+            if (st.size() > 0)
+                ans += ' ';
         }
 
-        return res;
+        return ans;
+    }
+    string trim(string& s) {
+        int l = 0, r = s.length() - 1;
+        while (l <= r) {
+            if (s[l] == ' ')
+                l++;
+            else if (s[r] == ' ')
+                r--;
+            else
+                break;
+        }
+        return s.substr(l, r - l + 1);
     }
 };
