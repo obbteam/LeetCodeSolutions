@@ -27,16 +27,5 @@ public:
 
         return ans;
     }
-    string trim(string& s) {
-        int l = 0, r = s.length() - 1;
-        while (l <= r) {
-            if (s[l] == ' ')
-                l++;
-            else if (s[r] == ' ')
-                r--;
-            else
-                break;
-        }
-        return s.substr(l, r - l + 1);
-    }
+    
 };
