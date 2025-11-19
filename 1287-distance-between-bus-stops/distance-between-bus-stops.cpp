@@ -9,12 +9,11 @@ public:
             i = (i + 1) % n;
         }
 
-        int i2 = start;
-        while (i2 != destination) {
-            i2--;
-            if (i2 < 0) i2 = n - 1;
-
-            cc += distance[i2];
+        i = start;
+        while (i != destination) {
+            i--;
+            if (i < 0) i = n - 1;
+            cc += distance[i];
         }
         return min(c, cc);
     }
