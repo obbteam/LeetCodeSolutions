@@ -5,9 +5,6 @@ static std::unordered_map<char, int> romanChars = {
 class Solution {
 public:
     int romanToInt(string s) {
-        if (s.length() == 1)
-            return romanChars[s[0]];
-
         int res = 0;
 
         for (int i = 0; i < s.length() - 1; ++i) {
@@ -17,7 +14,9 @@ public:
             if (cur < next) res -= cur;
             else res += cur;
         }
+
         res+=romanChars[s[s.length() - 1]];
+
         return res;
     }    
 };
